@@ -11,6 +11,6 @@ if(!$connect){
 	die('Cannot Connect Database :'.mysql_error());
 		
 }else{
-
+	//kuymax
 	}
 ?>
