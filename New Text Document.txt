@@ -1,0 +1,4 @@
+SELECT * from rent
+INNER JOIN bill ON
+rent.rent_id = bill.bill_rent 
+WHERE bill.bill_rent = $rent_id

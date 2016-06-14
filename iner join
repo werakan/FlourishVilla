@@ -1,0 +1,5 @@
+SELECT * FROM rent
+INNER JOIN customer  
+ON rent.cus_id = customer.cus_id
+INNER JOIN room
+ON rent.room_id = room.room_id
