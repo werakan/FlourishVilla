@@ -143,43 +143,28 @@ while($objResult = mysql_fetch_array($objQuery))
 
     <? echo $room_id; ?>
 
-    <td align="center"><select name= "status"  style="width: 150px"> 
+    <td align="center">
+        <select name= "status"  style="width: 150px"> 
     
     <>
-    
-    <? if($objResult["room_status"] == "1"){
-			$status_title = "ว่าง";
-		}elseif($objResult["room_status"] == "2"){
-			$status_title = "ไม่ว่าง";
-		}elseif($objResult["room_status"] == "3"){
-			$status_title = "จอง";
-	
-		}?>
-  <option value="0"> <?php echo $status_title; ?> </option>
-  <option value="1">ว่าง</option>
-  <option value="2">ไม่ว่าง</option>
-  <option value="3">จอง</option>
+  
+
+    <option value="0" <?php if($objResult['room_status']== 0){ ?> selected <?php } ?> > ปิดปรับปรุง </option>
+    <option value="1" <?php if($objResult['room_status']== 1){ ?> selected <?php } ?>> เปิดใช้งาน</option>
+
   
 </select ></td>
 
- <? if($objResult["room_type"] == "1"){
-			$room_title = "Class A";
-		}elseif($objResult["room_type"] == "2"){
-			$room_title = "Class B";
-		}elseif($objResult["room_type"] == "3"){
-			$room_title = "Class C";
-		}elseif($objResult["room_type"] == "4"){
-			$room_title = "Daily";
-		}?>
+
 
 
     <td><select name="classroom">
     
-  <option value="0"><?php echo $room_title; ?></option>
-  <option value="1">Class A</option>
-  <option value="2">Class B</option>
-  <option value="3">Class C</option>
-  <option value="4">daily</option>
+  
+  <option value="1" <?php if($objResult["room_type"]==1){ ?> selected<?php } ?>>Class A</option>
+  <option value="2" <?php if($objResult["room_type"]==2){ ?> selected<?php } ?>>Class B</option>
+  <option value="3" <?php if($objResult["room_type"]==3){ ?> selected<?php } ?>>Class C</option>
+  <option value="4" <?php if($objResult["room_type"]==4){ ?> selected<?php } ?>>Daily</option>
   
   
 </select></td>
