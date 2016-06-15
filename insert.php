@@ -25,6 +25,11 @@ $cus_password = $_POST['password'];
 
 $cus_email = $_POST['email'];
 
+$roomNumber = $_POST['roomNumber'];
+
+$rentType = $_POST['rentType'];
+
+
 $check_fname = false;
 $check_lname = false;
 
@@ -60,10 +65,22 @@ if($check_fname == true && $check_lname == true){
 																																									'$cus_password',
 																																									'$cus_email')";
 																																									 mysql_query($a);	
+																																									 
+echo "roomNumber".$roomNumber;
+var_dump ("roomNumber".$roomNumber);
+
+$sqlStr1 = "SELECT cus_id FROM customer WHERE cus_fname like '$fname'";
+$result1 = mysql_query($sqlStr1);
+$cusObj = mysql_fetch_array($result1);
+$cus_id = $cusObj['cus_id'];																																									 
+echo "cus_id".$cus_id;
+var_dump ("cus_id".$cus_id);
+$sqlStr2 = "INSERT INTO rent(cus_id,rent_date,room_id,rent_status) VALUES('$cus_id','$date','$roomNumber','$rentType')";
+mysql_query($sqlStr2);																																								
 																																										 
 																																									 header("location: http://www.allprojectz.com/max/add_admin.php?message=OK");																																				
 }else{
- header("location: http://www.allprojectz.com/max/from.php?message=FILL");	
+header("location: http://www.allprojectz.com/max/add_admin.php?message=FILL");	
 	
 	
 }

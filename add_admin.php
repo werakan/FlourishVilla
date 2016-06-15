@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-
+include('connect.php');
 
 $session_id = $_SESSION['id'];
 $session_name = $_SESSION['name'];
@@ -184,7 +184,39 @@ Female</p>
 		 <br>
          
 		  <br><br>
-		  
+		
+        
+       <div> <h2> การจองห้องพัก </h2></div>
+       <br>
+       Room Number : <select class="form-control"  name="roomNumber">
+       <?php 
+	   $sqlstr = "SELECT room.room_id,room.room_name from room  LEFT JOIN rent On room.room_id = rent.room_id WHERE rent.rent_status IS NULL"; 
+	   $result = mysql_query($sqlstr);
+	   
+	   if($result!=null){
+		   if(mysql_num_rows($result)>0){
+			   for($i=0;$i<mysql_num_rows($result);$i++){
+					$roomObj = mysql_fetch_array($result);
+					
+					?>                        	
+						<option value="<?php echo $roomObj['room_id'];?>"><?php echo $roomObj['room_name']; ?> </option>
+					<?php
+			   }
+		   }
+	   }
+	   
+	   ?>
+       
+       <br>
+       
+       </select>
+       Rent Type : <select class="form-control" name="rentType">
+       <option value="R">จอง</option>
+       <option value="S">เข้าพักทันที</option>
+       
+       </select>
+       <br>
+    
 		  
 		  
 		  <input type="submit" class="btn btn-primary" value"submit">
