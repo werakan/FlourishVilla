@@ -6,7 +6,7 @@ $date = date("Y-m-d H:i:s");
 $billele = $_POST['billele'];
 $billwater = $_POST['billwater'];
 $rentid = $_POST['rentid'];
-$dexp=strtotime("tomorrow");
+$dexp=strtotime("tomorrow"); 
 
 $check_billele = false;
 $check_billwater = false;
