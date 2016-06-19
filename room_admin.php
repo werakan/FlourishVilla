@@ -128,6 +128,8 @@ while($objResult = mysql_fetch_array($objQuery))
 
 
 <div class="row">
+   <td> <div class="col-sm-4"><?php echo $objResult["room_id"];?></div> </td> 
+               
 </div>
   
 
