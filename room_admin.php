@@ -117,21 +117,22 @@ $objQuery = mysql_query($strSQL) or die ("Error Query [".$strSQL."]");
 ?>
 
 
-
-<table width="1139" height="60" border="1">
-
+<div class="responsive">
+<table height="60" border="1" class="table">
+<tr>
 <?php
 
-while($objResult = mysql_fetch_array($objQuery))
-{
+
+//while($objResult = mysql_fetch_array($objQuery))
+//{
+for($i=0;$i<mysql_num_rows($objQuery);$i++){
+	$objResult = mysql_fetch_array($objQuery);
 ?>
 
 
-<div class="row">
-   <td> <div class="col-sm-4"><?php echo $objResult["room_id"];?></div> </td> 
-               
-</div>
-  
+   <td class="col-md-1" align="center"> <?php echo $objResult["room_name"];?> </td>                
+
+  	<? if( (($i+1)%10)==0){ ?>  </tr> <tr>  <?php  } ?>
 
 	
 
@@ -145,8 +146,9 @@ while($objResult = mysql_fetch_array($objQuery))
 <?php
 }
 ?>
+</tr>
 </table>
-    
+</div>    
       
 			<!--/.col-->
 		</div><!--/.row-->
