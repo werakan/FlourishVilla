@@ -110,11 +110,26 @@
 		 
 include "connect.php";
 
-$strSQL = "SELECT * FROM room ";
+$showType = $_GET['showType'];
+
+if($showType == "available"){
+	$condition = "LEFT JOIN rent on room.room_id = rent.room_id WHERE rent.rent_status IS NULL";	
+}else if($showType == 'unavailable'){
+	$condition = "INNER JOIN rent on room.room_id = rent.room_id";
+}else{
+	$condition = "";
+}
+$strSQL = "SELECT * FROM room ".$condition;
 $objQuery = mysql_query($strSQL) or die ("Error Query [".$strSQL."]");
 
 
 ?>
+
+<select name="showType" onChange="refreshPage(this)">
+<option value="all" <?php if($showType=="all"){ ?> selected <?php } ?>>Show All </option>
+<option value="available" <?php if($showType=="available"){ ?> selected <?php } ?> >Available</option>
+<option value="unavailable" <?php if($showType=="unavailable"){ ?> selected <?php } ?>>Unavailable</option>
+</select>
 
 
 <div class="responsive">
@@ -123,16 +138,18 @@ $objQuery = mysql_query($strSQL) or die ("Error Query [".$strSQL."]");
 <?php
 
 
-//while($objResult = mysql_fetch_array($objQuery))
-//{
+
 for($i=0;$i<mysql_num_rows($objQuery);$i++){
 	$objResult = mysql_fetch_array($objQuery);
 ?>
 
 
-   <td class="col-md-1" align="center"> <?php echo $objResult["room_name"];?>        
+   <td class="col-md-1" align="center"> 
+   <?php 
+   	echo $objResult["room_name"];?>        
    <? 
    $room_id_temp = $objResult["room_id"];
+   
    $sqlStr2 = "SELECT * from room 
     INNER JOIN rent on room.room_id = rent.room_id
     WHERE room.room_id = $room_id_temp
@@ -140,11 +157,15 @@ for($i=0;$i<mysql_num_rows($objQuery);$i++){
 	$rentObj = mysql_query($sqlStr2);	
 	
 	  ?>  <br> <?php
-   	if(mysql_num_rows($rentObj)==0){
-		?>  <div> ว่าง </div> <?php
+	if($rentObj!=null){
+		if(mysql_num_rows($rentObj)==0){
+			?>  <div style="color:#3C9"> ว่าง </div> <?php
+		}else{
+			$rentResult = mysql_fetch_array($rentObj);	
+			?>  <div style="color:#F00"> ไม่ว่าง <?php if($rentResult['rent_status'] == "R"){ ?> (จองแล้ว) <?php  }   ?></div> <?php
+		}
 	}else{
-		$rentResult = mysql_fetch_array($rentObj);	
-		?>  <div style="color:#F00"> ไม่ว่าง <?php if($rentResult['rent_status'] == "R"){ ?> (จองแล้ว) <?php  }   ?></div> <?php
+		?>   <div style="color:#3C9"> ว่าง </div> <?php
 	}
    
     ?>
@@ -172,6 +193,14 @@ for($i=0;$i<mysql_num_rows($objQuery);$i++){
 		</div><!--/.row-->
 	</div>	<!--/.main-->
 		  
+
+<script type='text/javascript'>
+    function refreshPage(type)
+    {
+		var val = type.value;
+       window.location = "room_admin.php?showType="+val;
+    }
+</script>
 
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
