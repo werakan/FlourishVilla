@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <title>ThaiCreate.Com PHP & MySQL Tutorial</title>
 </head>
 <body>

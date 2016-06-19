@@ -1,3 +1,6 @@
+<?
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +21,26 @@
 <![endif]-->
 
 </head>
+<?php 
+include 'connect.php';
+$userid = $_SESSION['id'];
+
+$strSQL = "SELECT * FROM customer ct
+			INNER JOIN rent rt ON
+			ct.cus_id = rt.cus_id
+			INNER JOIN room rm ON
+			rt.room_id = rm.room_id WHERE ct.cus_id=$userid ";
+
+$objQuery = mysql_query($strSQL) or die ("Error Query [".$strSQL."]");
+
+
+$query2 = mysql_fetch_array($objQuery);
+
+?>
+
+
+
+
 
 
 
@@ -105,17 +128,26 @@
                     
 						<div class="canvas-wrapper">
                         <div>
-                          <p><strong>ชื่่อ นามสกุล </strong></p>
+                          <p><strong>ชื่่อ นามสกุล <? echo $query2["cus_fname"]." ".$query2["cus_lname"]; ?> </strong></p>
                           <p>&nbsp;</p>
-                          <p> อายุ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;เพศ </p>
+                          
+                          <p>&nbsp;เพศ 
+                     	<? if($query2["cus_gender"] == "m"){
+							echo "ชาย";
+						} else if($query2["cus_gender"] == "f"){
+							echo "หญิง";
+						}
+						?>
+                        
+                        </p>
                           <br>
                           <p><br>
                           </p>
-                          <p> เลขบัตรประชาชน</p>
+                          <p> เลขบัตรประชาชน <? echo $query2["cus_citizen"]; ?> </p>
                           <p>&nbsp;</p>
-                          <p>เข้าอยู่เมื่อ</p>
+                          <p>เข้าอยู่เมื่อ <? echo $query2["cus_date"];?></p>
                           <p>&nbsp;</p>
-                          <p>ห้องพัก </p>
+                          <p>ห้องพัก <? echo $query2 ["room_name"]; ?> </p>
                         </div>
                         
                         

@@ -13,10 +13,10 @@ $check_billwater = false;
 $check_rentid = false;
 
 
-if($billele!=null && strlen($billele)>1){
+if($billele!=null && strlen($billele)>=1){
 	$check_billele = true;	
 }
-if($billwater!=null && strlen($billwater)>1){
+if($billwater!=null && strlen($billwater)>=1){
 	$check_billwater = true;
 }
 if($rentid!=null && strlen($rentid)>=1){
@@ -29,14 +29,14 @@ if($check_billwater == true && $check_billele == true  && $check_rentid == true 
 
 
 
-	$a = "INSERT INTO bill (bill_ele,
+	echo $a = "INSERT INTO bill (bill_ele,
 	bill_water,bill_date ,bill_exp ,bill_rent ) VALUES(	
 																																	  
 '$billele',
 																																									'$billwater',
 																																									'$date',
 																																									
-'$date2',	
+DATE_ADD(CURDATE(),INTERVAL 5 DAY),	
 																																																																														'$rentid'
 																																																																																 )";
 																																									 mysql_query($a);	
@@ -46,7 +46,7 @@ if($check_billwater == true && $check_billele == true  && $check_rentid == true 
 
 																																									header("location: http://www.allprojectz.com/max/elewater_admin2.php?message=OK");																																				
 }else{
- header("location: http://www.allprojectz.com/max/elewater_admin2.php?message=FILL");	
+ header("location: http://www.allprojectz.com/max/elewater_admin2.php?message=FAIL");	
 	
 	
 }
