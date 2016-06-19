@@ -119,21 +119,19 @@ $objQuery = mysql_query($strSQL) or die ("Error Query [".$strSQL."]");
 
 
 <table width="1139" height="60" border="1">
-  <tr>
-    <th width="63"> <div align="center">เลขห้อง </div></th>
-    
-  	
-    
-  </tr>
+
 <?php
 
 while($objResult = mysql_fetch_array($objQuery))
 {
 ?>
-  <tr>
- 
+
+
+<div class="row">
+</div>
   
-    <td><div align="center"><?php echo $objResult["room_id"];?></div></td>
+
+	
 
     <? echo $room_id; ?>
 
@@ -141,9 +139,6 @@ while($objResult = mysql_fetch_array($objQuery))
 
     
     
- 
- 
-  </tr>
 
 <?php
 }
