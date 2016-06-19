@@ -110,7 +110,7 @@
 		 
 include "connect.php";
 
-$strSQL = "SELECT * FROM room";
+$strSQL = "SELECT * FROM room ";
 $objQuery = mysql_query($strSQL) or die ("Error Query [".$strSQL."]");
 
 
@@ -130,13 +130,31 @@ for($i=0;$i<mysql_num_rows($objQuery);$i++){
 ?>
 
 
-   <td class="col-md-1" align="center"> <?php echo $objResult["room_name"];?> </td>                
-
+   <td class="col-md-1" align="center"> <?php echo $objResult["room_name"];?>        
+   <? 
+   $room_id_temp = $objResult["room_id"];
+   $sqlStr2 = "SELECT * from room 
+    INNER JOIN rent on room.room_id = rent.room_id
+    WHERE room.room_id = $room_id_temp
+	ORDER BY rent.rent_date DESC ";
+	$rentObj = mysql_query($sqlStr2);	
+	
+	  ?>  <br> <?php
+   	if(mysql_num_rows($rentObj)==0){
+		?>  <div> ว่าง </div> <?php
+	}else{
+		$rentResult = mysql_fetch_array($rentObj);	
+		?>  <div style="color:#F00"> ไม่ว่าง <?php if($rentResult['rent_status'] == "R"){ ?> (จองแล้ว) <?php  }   ?></div> <?php
+	}
+   
+    ?>
+         
+	</td>
   	<? if( (($i+1)%10)==0){ ?>  </tr> <tr>  <?php  } ?>
 
 	
 
-    <? echo $room_id; ?>
+    
 
    
 
